@@ -41,10 +41,19 @@
         };
 
         devShells.default = pkgs.mkShell {
-          inputsFrom = [ app ];
-          packages = with python.pkgs; [
-            black
-            pylint
+          packages = [
+            app
+            pkgs.pyright
+            (python.withPackages (
+              ps: with ps; [
+                beautifulsoup4
+                pydantic
+                requests
+                debugpy
+                black
+                pylint
+              ]
+            ))
           ];
         };
       }
